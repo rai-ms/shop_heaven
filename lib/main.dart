@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_heaven/utils/routes/navigate_route.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
+import 'package:shop_heaven/view_model/cart_view_model.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
 
 void main() {
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => HomePageViewModel()),
+          ChangeNotifierProvider(create: (context) => CartViewModelProvider()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

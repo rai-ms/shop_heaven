@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_heaven/model/cart_model.dart';
 import 'package:shop_heaven/res/components/custom_toast.dart';
 import 'package:shop_heaven/utils/random_no_generator.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
     'dozen', // Apricot
   ];
 
-  List<double> productPrice = GenerateRandom.getRandomList(100, 500, 20);
+  List<int> productPrice = GenerateRandom.getRandomListInt(100, 200, 20);
 
   List<String> productImage = [
     'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w=',
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.greenAccent,
           title: Consumer<HomePageViewModel>(
             builder: (context, value, child) {
-              String totalPrice = value.totalPrice.toStringAsFixed(1);
+              String totalPrice = value.totalPrice.toString();
               return Text(totalPrice);
             },
           ),
@@ -163,8 +164,7 @@ class _HomePageState extends State<HomePage> {
                                             const SizedBox(
                                               width: 10,
                                             ),
-                                            Text(productPrice[index]
-                                                .toStringAsFixed(1)),
+                                            Text(productPrice[index].toString()),
                                           ],
                                         ),
                                       ],
@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context, value, child) {
                                   return InkWell(
                                     onTap: () {
-                                      value.addToCart(productPrice[index]);
+                                      value.addToCart(productPrice[index], Cart(id: index, productName: productName[index], image: productImage[index], initialPrice: productPrice[index], productId: index.toString(), productPrice: productPrice[index], quantity: 1, unitTag: productUnit[index]), context);
                                     },
                                     child: Container(
                                       height: 50,
