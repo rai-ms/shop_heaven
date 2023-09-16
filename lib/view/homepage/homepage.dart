@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_heaven/res/components/custom_toast.dart';
 import 'package:shop_heaven/utils/random_no_generator.dart';
+import 'package:shop_heaven/view_model/homepage_view_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -78,28 +80,40 @@ class _HomePageState extends State<HomePage> {
     'https://www.freshproduceshoppe.com/wp-content/uploads/2018/09/apricot-freshproduceshoppe-1024x1024.jpg'
   ];
 
-  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.greenAccent, actions: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Badge(
-              backgroundColor: Colors.yellow,
-              label: Text(
-                "$count",
-                style: const TextStyle(color: Colors.black),
+      appBar: AppBar(
+          backgroundColor: Colors.greenAccent,
+          title: Consumer<HomePageViewModel>(
+            builder: (context, value, child) {
+              String totalPrice = value.totalPrice.toStringAsFixed(1);
+              return Text(totalPrice);
+            },
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Consumer<HomePageViewModel>(
+                builder: (context, value, child) {
+                  int count = value.counter;
+                  return Badge(
+                      backgroundColor: Colors.yellow,
+                      label: Text(
+                        "$count",
+                        style: const TextStyle(color: Colors.black),
+                      ),
+                      child: InkWell(
+                          onTap: () {},
+                          child: const Icon(
+                            Icons.shopping_bag,
+                            size: 30,
+                            color: Colors.blueAccent,
+                          )));
+                },
               ),
-              child: InkWell(
-                  onTap: () {},
-                  child: const Icon(
-                    Icons.shopping_bag,
-                    size: 30,
-                    color: Colors.blueAccent,
-                  ))),
-        )
-      ]),
+            )
+          ]),
       body: Center(
           child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 700),
@@ -118,21 +132,24 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Expanded(
                                     child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black, width: 1),
-                                        borderRadius: BorderRadius.circular(10)
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Image.network(productImage[index]),
-                                      )),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.black, width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Image.network(
+                                              productImage[index]),
+                                        )),
                                   ),
                                   const SizedBox(
                                     width: 20,
                                   ),
                                   Expanded(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -143,8 +160,11 @@ class _HomePageState extends State<HomePage> {
                                         Row(
                                           children: [
                                             Text(productUnit[index].toString()),
-                                            SizedBox(width: 10,),
-                                            Text(productPrice[index].toStringAsFixed(1)),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(productPrice[index]
+                                                .toStringAsFixed(1)),
                                           ],
                                         ),
                                       ],
@@ -154,19 +174,24 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Flexible(
-                              child: InkWell(
-                                onTap: () {
+                              child: Consumer<HomePageViewModel>(
+                                builder: (context, value, child) {
+                                  return InkWell(
+                                    onTap: () {
+                                      value.addToCart(productPrice[index]);
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                          color: Colors.lightGreen,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: const Center(
+                                          child: Text("Add to cart")),
+                                    ),
+                                  );
                                 },
-                                child: Container(
-                                  height: 50,
-                                  width: 120,
-                                  decoration: BoxDecoration(
-                                      color: Colors.lightGreen,
-                                      borderRadius:
-                                          BorderRadius.circular(20)),
-                                  child: const Center(
-                                      child: Text("Add to cart")),
-                                ),
                               ),
                             )
                           ],
