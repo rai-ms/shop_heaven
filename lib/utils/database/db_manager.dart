@@ -41,7 +41,7 @@ class DBManager {
       path,
       version: 1,
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
+      // onUpgrade: _onUpgrade,
     );
   }
 
@@ -52,13 +52,13 @@ class DBManager {
 
 
   // onUpgrade will run only if user is already using the app
-  _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < newVersion) {
-      await db.execute('DROP TABLE IF EXISTS $table_shop_heaven_cart');
-      await db.execute(
-          'CREATE TABLE $table_shop_heaven_cart ($id INTEGER PRIMARY KEY , $productId VARCHAR UNIQUE, $productName TEXT, $productPrice INTEGER , $initialPrice INTEGER, $quantity INTEGER, $unitTag TEXT , $image TEXT');
-    }
-  }
+  // _onUpgrade(Database db, int oldVersion, int newVersion) async {
+  //   if (oldVersion < newVersion) {
+  //     await db.execute('DROP TABLE IF EXISTS $table_shop_heaven_cart');
+  //     await db.execute(
+  //         'CREATE TABLE $table_shop_heaven_cart ($id INTEGER PRIMARY KEY , $productId VARCHAR UNIQUE, $productName TEXT, $productPrice INTEGER , $initialPrice INTEGER, $quantity INTEGER, $unitTag TEXT , $image TEXT');
+  //   }
+  // }
 
   Future<Cart> insert(Cart cart) async {
     var dbClient = await database;
