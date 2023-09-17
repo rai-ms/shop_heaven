@@ -41,34 +41,54 @@ class DBManager {
       path,
       version: 1,
       onCreate: _onCreate,
-      // onUpgrade: _onUpgrade,
+      onUpgrade: _onUpgrade,
     );
   }
 
   _onCreate(Database db, int version) async {
-    await db.execute(
-          'CREATE TABLE $table_shop_heaven_cart ($id INTEGER PRIMARY KEY , $productId VARCHAR UNIQUE, $productName TEXT, $productPrice INTEGER , $initialPrice INTEGER, $quantity INTEGER, $unitTag TEXT , $image TEXT');
-    }
-
+  await db.execute('''
+    CREATE TABLE $table_shop_heaven_cart (
+      $id INTEGER PRIMARY KEY,
+      $productId TEXT UNIQUE,
+      $productName TEXT,
+      $productPrice INTEGER,
+      $initialPrice INTEGER,
+      $quantity INTEGER,
+      $unitTag TEXT,
+      $image TEXT
+    )
+  ''');
+}
 
   // onUpgrade will run only if user is already using the app
-  // _onUpgrade(Database db, int oldVersion, int newVersion) async {
-  //   if (oldVersion < newVersion) {
-  //     await db.execute('DROP TABLE IF EXISTS $table_shop_heaven_cart');
-  //     await db.execute(
-  //         'CREATE TABLE $table_shop_heaven_cart ($id INTEGER PRIMARY KEY , $productId VARCHAR UNIQUE, $productName TEXT, $productPrice INTEGER , $initialPrice INTEGER, $quantity INTEGER, $unitTag TEXT , $image TEXT');
-  //   }
-  // }
-
-  Future<Cart> insert(Cart cart) async {
-    var dbClient = await database;
-    await dbClient.insert(table_shop_heaven_cart, cart.toMap());
-    return cart;
+  _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < newVersion) {
+      await db.execute('DROP TABLE IF EXISTS $table_shop_heaven_cart');
+      await db.execute(
+          'CREATE TABLE $table_shop_heaven_cart ($id INTEGER PRIMARY KEY , $productId VARCHAR UNIQUE, $productName TEXT, $productPrice INTEGER , $initialPrice INTEGER, $quantity INTEGER, $unitTag TEXT , $image TEXT');
+    }
   }
+
+  // Future<Cart> insert(Cart cart) async {
+  //   var dbClient = await database;
+  //   await dbClient.insert(table_shop_heaven_cart, cart.toMap());
+  //   return cart;
+  // }
+  Future<Cart> insert(Cart cart) async {
+  final dbClient = await database;
+  await dbClient.insert(
+    table_shop_heaven_cart,
+    cart.toMap(),
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+  return cart;
+}
+
 
   Future<List<Cart>> getCartDataList() async {
     var dbClient = await database;
-    final List<Map<String, Object?>> queryResult = await dbClient.query(table_shop_heaven_cart);
-    return  queryResult.map((e) => Cart.fromMap(e)).toList();
+    final List<Map<String, Object?>> queryResult =
+        await dbClient.query(table_shop_heaven_cart);
+    return queryResult.map((e) => Cart.fromMap(e)).toList();
   }
 }

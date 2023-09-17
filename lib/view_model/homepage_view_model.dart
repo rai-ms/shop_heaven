@@ -14,17 +14,16 @@ class HomePageViewModel extends ChangeNotifier {
   int _totalPrice = 0;
   int get totalPrice => _totalPrice;
 
-  /// Add Product into the Cart, it required [productPrice] to add
-  Future<void> addToCart(
-      int productPrice, Cart cart, BuildContext context) async {
+  /// Add Product into the Cart, it required [Cart] and [BuildContext] to add
+  Future<void> addToCart(Cart cart, BuildContext context) async {
     DBManager db = DBManager();
     db.insert(cart).then((value) {
-      _totalPrice += productPrice;
+      _totalPrice += cart.productPrice;
       _counter++;
       addItem();
     }).onError((error, stackTrace) {
       print(error);
-      CustomToast(message: "$error", context: context);
+      // CustomToast(message: "$error", context: context);
     });
   }
 

@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context, value, child) {
                                   return InkWell(
                                     onTap: () {
-                                      value.addToCart(productPrice[index], Cart(id: index, productName: productName[index], image: productImage[index], initialPrice: productPrice[index], productId: index.toString(), productPrice: productPrice[index], quantity: 1, unitTag: productUnit[index]), context);
+                                      value.addToCart(Cart(id: index, productName: productName[index], image: productImage[index], initialPrice: productPrice[index], productId: index.toString(), productPrice: productPrice[index], quantity: 1, unitTag: productUnit[index]), context);
                                     },
                                     child: Container(
                                       height: 50,
