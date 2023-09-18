@@ -38,7 +38,7 @@ class _CartViewState extends State<CartView> {
                       return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasData) 
                     {
-                      return ListView.builder(itemBuilder: (context, index) => CartViewUI(cart: cartList[index],), itemCount: cartList.length,);
+                      return ListView.builder(itemBuilder: (context, index) => CartViewUI(cart: cartList[index],isAddRemove: false,), itemCount: cartList.length,);
                     } else
                       return const Center(child: CircularProgressIndicator());
                   });
