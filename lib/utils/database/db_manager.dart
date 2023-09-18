@@ -46,7 +46,7 @@ class DBManager {
   }
 
   _onCreate(Database db, int version) async {
-  await db.execute('''
+    await db.execute('''
     CREATE TABLE $table_shop_heaven_cart (
       $id INTEGER PRIMARY KEY,
       $productId TEXT UNIQUE,
@@ -58,7 +58,7 @@ class DBManager {
       $image TEXT
     )
   ''');
-}
+  }
 
   // onUpgrade will run only if user is already using the app
   _onUpgrade(Database db, int oldVersion, int newVersion) async {
@@ -75,15 +75,14 @@ class DBManager {
   //   return cart;
   // }
   Future<Cart> insert(Cart cart) async {
-  final dbClient = await database;
-  await dbClient.insert(
-    table_shop_heaven_cart,
-    cart.toMap(),
-    conflictAlgorithm: ConflictAlgorithm.replace,
-  );
-  return cart;
-}
-
+    final dbClient = await database;
+    await dbClient.insert(
+      table_shop_heaven_cart,
+      cart.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return cart;
+  }
 
   Future<List<Cart>> getCartDataList() async {
     var dbClient = await database;

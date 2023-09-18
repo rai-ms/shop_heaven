@@ -9,7 +9,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -20,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 3));
 
     // ignore: use_build_context_synchronously
-    Navigator.pushNamedAndRemoveUntil(context, RouteName.homepage, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, RouteName.homepage, (route) => false);
   }
 
   @override

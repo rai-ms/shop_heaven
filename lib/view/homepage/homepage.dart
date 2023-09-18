@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_heaven/model/cart_model.dart';
 import 'package:shop_heaven/res/components/custom_toast.dart';
 import 'package:shop_heaven/utils/random_no_generator.dart';
+import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -105,7 +106,9 @@ class _HomePageState extends State<HomePage> {
                         style: const TextStyle(color: Colors.black),
                       ),
                       child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, RouteName.cartPage);
+                          },
                           child: const Icon(
                             Icons.shopping_bag,
                             size: 30,
@@ -164,7 +167,8 @@ class _HomePageState extends State<HomePage> {
                                             const SizedBox(
                                               width: 10,
                                             ),
-                                            Text(productPrice[index].toString()),
+                                            Text(
+                                                productPrice[index].toString()),
                                           ],
                                         ),
                                       ],
@@ -178,7 +182,17 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context, value, child) {
                                   return InkWell(
                                     onTap: () {
-                                      value.addToCart(Cart(id: index, productName: productName[index], image: productImage[index], initialPrice: productPrice[index], productId: index.toString(), productPrice: productPrice[index], quantity: 1, unitTag: productUnit[index]), context);
+                                      value.addToCart(
+                                          Cart(
+                                              id: index,
+                                              productName: productName[index],
+                                              image: productImage[index],
+                                              initialPrice: productPrice[index],
+                                              productId: index.toString(),
+                                              productPrice: productPrice[index],
+                                              quantity: 1,
+                                              unitTag: productUnit[index]),
+                                          context);
                                     },
                                     child: Container(
                                       height: 50,
