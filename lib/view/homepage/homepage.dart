@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_heaven/model/cart_item_view.dart';
 import 'package:shop_heaven/model/cart_model.dart';
-import 'package:shop_heaven/res/components/custom_toast.dart';
-import 'package:shop_heaven/utils/random_no_generator.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
 
@@ -13,6 +11,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+int countItems = 0;
 
 class _HomePageState extends State<HomePage> {
   List<Cart> list = [];
@@ -30,8 +30,17 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.greenAccent,
           title: Consumer<HomePageViewModel>(
             builder: (context, value, child) {
-              String totalPrice = value.totalPrice.toString();
-              return Text(totalPrice);
+              return FutureBuilder(
+                  future: value.totalPrice,
+                  builder: ((context, snapshot) {
+                    if (snapshot.hasData) {
+                      int totalPrice = snapshot.data!;
+                      return Text(totalPrice.toString());
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }));
             },
           ),
           actions: [
@@ -39,12 +48,20 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10.0),
               child: Consumer<HomePageViewModel>(
                 builder: (context, value, child) {
-                  int count = value.counter;
+                  // getItemCount(value.counter);
                   return Badge(
                       backgroundColor: Colors.yellow,
-                      label: Text(
-                        "$count",
-                        style: const TextStyle(color: Colors.black),
+                      label: FutureBuilder(
+                        future: value.counter,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            int ct = snapshot.data!;
+                            Text(ct.toString());
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
                       ),
                       child: InkWell(
                           onTap: () {
@@ -57,6 +74,37 @@ class _HomePageState extends State<HomePage> {
                           )));
                 },
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Consumer<HomePageViewModel>(
+                builder: (context, value, child) {
+                  // getItemCount(value.counter);
+                  return Badge(
+                      backgroundColor: Colors.yellow,
+                      label: FutureBuilder(
+                        future: value.counter,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            int ct = snapshot.data!;
+                            Text(ct.toString());
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
+                      child: InkWell(
+                          onTap: () {
+                            value.deleteDatabase();
+                          },
+                          child: const Icon(
+                            Icons.delete,
+                            size: 30,
+                            color: Colors.blueAccent,
+                          )));
+                },
+              ),
             )
           ]),
       body: Center(
@@ -64,9 +112,12 @@ class _HomePageState extends State<HomePage> {
         constraints: const BoxConstraints(maxWidth: 700),
         child: Column(
           children: [
-            Expanded(child: ListView.builder(itemCount: list.length, itemBuilder: ((context, index) {
-              return CartViewUI(cart:list[index]);
-            })))
+            Expanded(
+                child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: ((context, index) {
+                      return CartViewUI(cart: list[index]);
+                    })))
           ],
         ),
       )),

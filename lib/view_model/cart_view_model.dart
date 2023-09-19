@@ -1,21 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:shop_heaven/model/cart_model.dart';
+import 'package:shop_heaven/res/components/custom_toast.dart';
 
 import '../utils/database/db_manager.dart';
 
 class CartViewModelProvider extends ChangeNotifier {
-  DBManager _dbManager = DBManager();
+  final DBManager _dbManager = DBManager();
 
-  int _counter = 0;
-  int get counter => _counter;
+  Future<int> getCounter() async {
+    int counter = await _dbManager.getTotalItemCount();
+    notifyListeners();
+    return counter;
+  }
 
-  int _totalPrice = 0;
-  int get totalPrice => _totalPrice;
+  Future<int> getTotalPrice() async {
+    List<Cart> data = await getAllData();
+    int totalPrice = 0;
+    for (var element in data) {
+      totalPrice = totalPrice + element.quantity * element.initialPrice;
+    }
+    return totalPrice;
+  }
 
-  late Future<List<Cart>> _cart;
-  Future<List<Cart>> get cart => _cart;
+  Future<List<Cart>> getAllData() async {
+    return await _dbManager.getCartDataList();
+  }
 
-  Future<List<Cart>> getData() async {
-    return _cart = _dbManager.getCartDataList();
+  Future<void> deleteFromDatabase(Cart cart) async {
+    // int res = await _dbManager.deleteCartItem(cart.id!);
+    // _counter--;
+    // _totalPrice -= cart.initialPrice;
+    int res = await _dbManager.getCartQuantity(cart);
+    // CustomToast(context: context, message: "$res");
+    if (res != 0) {
+      // CustomToast(context: context, message: "Item Removed");
+    }
+    notifyListeners();
+  }
+
+  Future<int> getItemCount(Cart cart) async {
+    return await _dbManager.getCartQuantity(cart);
+  }
+
+  Future<void> increase(Cart cart) async {
+    int ct = await _dbManager.getCartQuantity(cart);
+    if (ct == 0) {
+      _dbManager.insert(cart);
+    }
+    await _dbManager.updateQuantity(cart, ct + 1).then((value) {
+      print("Success in increase");
+      notifyListeners();
+    }).onError((error, stackTrace) {
+      print("Error in CartViewModel increase $error");
+    });
+  }
+
+  Future<void> decrease(Cart cart) async {
+    int ct = await getItemCount(cart);
+    if (ct > 1) {
+      await _dbManager.updateQuantity(cart, ct - 1).then((value) {
+        print("Success decrease");
+        notifyListeners();
+      }).onError((error, stackTrace) {
+        print("Error in CartViewModel decrase $error");
+      });
+    } else {
+      await deleteFromDatabase(cart).then((value) {
+        notifyListeners();
+      }).onError((error, stackTrace) {
+        print("Error in CartViewModel delete $error");
+      });
+    }
   }
 }

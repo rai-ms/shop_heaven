@@ -18,34 +18,67 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.greenAccent,
-          title: Consumer<HomePageViewModel>(
-            builder: (context, value, child) {
-              String totalPrice = value.totalPrice.toString();
-              return Text(totalPrice);
-            },
-          ),
-         ),
+          title: const Text("Buy Added Products")),
       body: Center(
         child: Column(
           children: [
-            Expanded(child:
-                Consumer<CartViewModelProvider>(builder: (key, value, child) {
-              return FutureBuilder(
-                  future: value.getData(),
-                  builder: (BuildContext context, AsyncSnapshot<List<Cart>> snapshot) {
-                    List<Cart> cartList = snapshot.data!;
-                    if (!snapshot.hasData || snapshot.hasError) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasData) 
-                    {
-                      return ListView.builder(itemBuilder: (context, index) => CartViewUI(cart: cartList[index],isAddRemove: false,), itemCount: cartList.length,);
-                    } else
-                      return const Center(child: CircularProgressIndicator());
-                  });
-            }))
+            Expanded(
+                flex: 8,
+                child: Consumer<CartViewModelProvider>(
+                    builder: (key, value, child) {
+                      return FutureBuilder(
+                        future: value.getAllData(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<List<Cart>> snapshot) {
+                          List<Cart> cartList = snapshot.data!;
+                          if (!snapshot.hasData || snapshot.hasError) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasData) {
+                            return ListView.builder(
+                              itemBuilder: (context, index) => CartViewUI(
+                                cart: cartList[index],
+                                isAddRemove: true,
+                              ),
+                              itemCount: cartList.length,
+                            );
+                          } else
+                            // ignore: curly_braces_in_flow_control_structures
+                            return const Center(
+                                child: CircularProgressIndicator());
+                        });
+                })),
+            Expanded(
+              flex: 2,
+              child: generateBill(),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget generateBill() {
+    return Row(
+      children: [
+        Consumer<HomePageViewModel>(
+          builder: (context, value, child) {
+            setValues(value.counter, value.totalPrice);
+            return Column(
+              children: [
+                Text("Total Item count:${ct}"),
+                Text("Total Price is:$tp"),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  int ct = 0, tp = 0;
+  setValues(Future<int> itmct, Future<int> itmpr) async {
+    ct = await itmct;
+    tp = await itmpr;
   }
 }

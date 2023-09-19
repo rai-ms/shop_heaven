@@ -69,17 +69,11 @@ class DBManager {
     }
   }
 
-  // Future<Cart> insert(Cart cart) async {
-  //   var dbClient = await database;
-  //   await dbClient.insert(table_shop_heaven_cart, cart.toMap());
-  //   return cart;
-  // }
   Future<Cart> insert(Cart cart) async {
     final dbClient = await database;
     await dbClient.insert(
       table_shop_heaven_cart,
       cart.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return cart;
   }
@@ -88,6 +82,91 @@ class DBManager {
     var dbClient = await database;
     final List<Map<String, Object?>> queryResult =
         await dbClient.query(table_shop_heaven_cart);
+    // print(queryResult);
     return queryResult.map((e) => Cart.fromMap(e)).toList();
+  }
+
+  Future<int> deleteCartItem(Cart cart) async {
+    var dbClient = await database;
+    return await dbClient.delete(table_shop_heaven_cart,
+        where: "id = ?", whereArgs: [cart.productId]);
+  }
+
+  Future<int> getCartQuantity(Cart cart) async {
+    var dbClient = await database;
+    String cartProductIt = cart.productId;
+    String query = '''
+    SELECT COUNT(*) FROM $table_shop_heaven_cart
+    WHERE $productId = $cartProductIt
+    ''';
+
+    // Execute the query and get the result as a list of maps
+    List<Map<String, dynamic>> result = await dbClient.rawQuery(query);
+
+    // Check if the count is greater than zero, indicating that the item already exists
+    return result[0]['COUNT(*)'];
+  }
+
+  // Future<int> getQuantity(Cart cart) async {
+  //   var dbClient = await database;
+  //   String prId = cart.productId;
+  //   String query = '''
+  //   SELECT $quantity FROM $table_shop_heaven_cart
+  //   WHERE $prId = ?
+  //   ''';
+  //   int res = await dbClient.rawUpdate(query, [prId]);
+  //   print(res.toString()  + "is res");
+  //   return res;
+  // }
+
+  Future<int> getTotalItemCount() async {
+    var dbClient = await database;
+
+    // Define the SQL query to calculate the total item count
+    String query = '''
+      SELECT SUM($quantity) AS total_items FROM $table_shop_heaven_cart
+    ''';
+
+    // Execute the query and return the total item count
+    var result = await dbClient.rawQuery(query);
+
+    // Extract the total item count from the query result
+    int totalItems = Sqflite.firstIntValue(result) ?? 0;
+    return totalItems;
+  }
+
+  Future<void> updateQuantity(Cart cart, int newQuantity) async {
+    var dbClient = await database;
+    int prId = cart.id!;
+    String query = '''
+    UPDATE $table_shop_heaven_cart
+    SET $quantity = ?
+    WHERE $id = ?
+  ''';
+    await dbClient.rawUpdate(query, [newQuantity, prId]);
+  }
+
+  Future<List<Map<String, dynamic>>> getItemsWithQuantityGreaterThanTwo(
+      int val) async {
+    var dbClient = await database;
+
+    // Define the SQL query to retrieve items with quantity > 2
+    String query = '''
+      SELECT * FROM $table_shop_heaven_cart
+      WHERE $quantity > $val
+    ''';
+
+    // Execute the query and return the result as a list of maps
+    return await dbClient.rawQuery(query);
+  }
+
+  Future<void> clearCart() async {
+    var dbClient = await database;
+
+    // Define the SQL query to clear the CartHeavenShop table
+    String query = 'DELETE FROM $table_shop_heaven_cart';
+
+    // Execute the query to clear the table
+    await dbClient.rawDelete(query);
   }
 }
