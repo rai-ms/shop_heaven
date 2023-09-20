@@ -107,18 +107,14 @@ class DBManager {
     return result[0]['COUNT(*)'];
   }
 
-
   Future<int> getTotalItemCount() async {
     var dbClient = await database;
-
 
     String query = '''
       SELECT SUM($quantity) AS total_items FROM $table_shop_heaven_cart
     ''';
 
-
     var result = await dbClient.rawQuery(query);
-
 
     int totalItems = Sqflite.firstIntValue(result) ?? 0;
     return totalItems;
@@ -126,6 +122,7 @@ class DBManager {
 
   Future<void> updateQuantity(Cart cart, int newQuantity) async {
     var dbClient = await database;
+    // print("New Quantity Recieved is: " + newQuantity.toString());
     int prId = cart.id!;
     String query = '''
     UPDATE $table_shop_heaven_cart

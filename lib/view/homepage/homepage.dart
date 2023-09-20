@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, value, child) {
               return FutureBuilder(
                   future: value.totalPrice,
-                  builder: ((context, snapshot) {
+                  builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       int totalPrice = snapshot.data!;
                       return Text(totalPrice.toString());
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  }));
+                  });
             },
           ),
           actions: [
@@ -48,21 +48,48 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(10.0),
               child: Consumer<HomePageViewModel>(
                 builder: (context, value, child) {
-                  // getItemCount(value.counter);
                   return Badge(
-                      backgroundColor: Colors.yellow,
+                      backgroundColor: Colors.black,
                       label: FutureBuilder(
-                        future: value.counter,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            int ct = snapshot.data!;
-                            Text(ct.toString());
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                      ),
+                          future: value.totalPrice,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              int totalPrice = snapshot.data!;
+                              return Text(totalPrice.toString());
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }),
+                      child: InkWell(
+                          onTap: () {
+                            value.deleteDatabase();
+                          },
+                          child: const Icon(
+                            Icons.currency_rupee,
+                            size: 30,
+                            color: Colors.blueAccent,
+                          )));
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Consumer<HomePageViewModel>(
+                builder: (context, value, child) {
+                  return Badge(
+                      backgroundColor: Colors.black,
+                      label: FutureBuilder(
+                          future: value.counter,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              int totalPrice = snapshot.data!;
+                              return Text(totalPrice.toString());
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }),
                       child: InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, RouteName.cartPage);
@@ -75,38 +102,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Consumer<HomePageViewModel>(
-                builder: (context, value, child) {
-                  // getItemCount(value.counter);
-                  return Badge(
-                      backgroundColor: Colors.yellow,
-                      label: FutureBuilder(
-                        future: value.counter,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            int ct = snapshot.data!;
-                            Text(ct.toString());
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                      ),
-                      child: InkWell(
-                          onTap: () {
-                            value.deleteDatabase();
-                          },
-                          child: const Icon(
-                            Icons.delete,
-                            size: 30,
-                            color: Colors.blueAccent,
-                          )));
-                },
-              ),
-            )
-          ]),
+            ]),
       body: Center(
           child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 700),

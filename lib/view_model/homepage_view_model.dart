@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_heaven/model/cart_model.dart';
-import 'package:shop_heaven/res/components/custom_toast.dart';
 import 'package:shop_heaven/utils/database/db_manager.dart';
 
 class HomePageViewModel extends ChangeNotifier {
@@ -36,11 +34,14 @@ class HomePageViewModel extends ChangeNotifier {
   Future<void> increase(Cart cart) async {
     int ct = await _dbManager.getCartQuantity(cart);
     print(ct.toString() + " Ct");
+
     if (ct > 0) {
-      await _dbManager.updateQuantity(cart, ct + 1).then((value) async {
+      ++ct;
+      print(ct);
+      await _dbManager.updateQuantity(cart, ct).then((value) async {
         print("Success in updating ");
         _cart = await getData();
-        // print(_cart);
+        print(_cart[0].quantity.toString()+ "Quantity of first");
         notifyListeners();
       }).onError((error, stackTrace) {
         print("Error in HomeViewModel $error");

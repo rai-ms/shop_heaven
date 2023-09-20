@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shop_heaven/model/cart_model.dart';
-import 'package:shop_heaven/res/components/custom_toast.dart';
 
 import '../utils/database/db_manager.dart';
 
