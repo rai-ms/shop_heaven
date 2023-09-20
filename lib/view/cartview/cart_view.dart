@@ -21,12 +21,14 @@ class _CartViewState extends State<CartView> {
           title: const Text("Buy Added Products")),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
                 flex: 8,
                 child: Consumer<CartViewModelProvider>(
                     builder: (key, value, child) {
-                      return FutureBuilder(
+                      return FutureBuilder<List<Cart>>(
                         future: value.getAllData(),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Cart>> snapshot) {
@@ -50,8 +52,8 @@ class _CartViewState extends State<CartView> {
                 })),
             Expanded(
               flex: 2,
-              child: generateBill(),
-            ),
+              child: generateBill()
+              )
           ],
         ),
       ),
@@ -59,20 +61,29 @@ class _CartViewState extends State<CartView> {
   }
 
   Widget generateBill() {
-    return Row(
-      children: [
-        Consumer<HomePageViewModel>(
-          builder: (context, value, child) {
-            setValues(value.counter, value.totalPrice);
-            return Column(
-              children: [
-                Text("Total Item count:${ct}"),
-                Text("Total Price is:$tp"),
-              ],
-            );
-          },
-        ),
-      ],
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Consumer<HomePageViewModel>(
+            builder: (context, value, child) {
+              setValues(value.counter, value.totalPrice);
+              return Visibility(
+                visible: value.counter == 0 ? false:true,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text("Total Item count:${ct}"),
+                    Text("Total Price is:$tp"),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 

@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             builder: (context, value, child) {
               return FutureBuilder(
                   future: value.totalPrice,
-                  builder: (context, snapshot) {
+                  builder: ((context, snapshot) {
                     if (snapshot.hasData) {
                       int totalPrice = snapshot.data!;
                       return Text(totalPrice.toString());
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
-                  });
+                  }));
             },
           ),
           actions: [
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.black,
                       label: FutureBuilder(
                           future: value.totalPrice,
-                          builder: (context, snapshot) {
+                          builder: ((context, snapshot) {
                             if (snapshot.hasData) {
                               int totalPrice = snapshot.data!;
                               return Text(totalPrice.toString());
@@ -60,13 +60,13 @@ class _HomePageState extends State<HomePage> {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
-                          }),
+                          })),
                       child: InkWell(
                           onTap: () {
                             value.deleteDatabase();
                           },
                           child: const Icon(
-                            Icons.currency_rupee,
+                            Icons.delete,
                             size: 30,
                             color: Colors.blueAccent,
                           )));
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: Colors.black,
                       label: FutureBuilder(
                           future: value.counter,
-                          builder: (context, snapshot) {
+                          builder: ((context, snapshot) {
                             if (snapshot.hasData) {
                               int totalPrice = snapshot.data!;
                               return Text(totalPrice.toString());
@@ -89,9 +89,9 @@ class _HomePageState extends State<HomePage> {
                             return const Center(
                               child: CircularProgressIndicator(),
                             );
-                          }),
+                          })),
                       child: InkWell(
-                          onTap: () {
+                          onTap: ()  {
                             Navigator.pushNamed(context, RouteName.cartPage);
                           },
                           child: const Icon(
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            ]),
+          ]),
       body: Center(
           child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 700),

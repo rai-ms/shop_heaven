@@ -93,19 +93,22 @@ class DBManager {
   }
 
   Future<int> getCartQuantity(Cart cart) async {
-    var dbClient = await database;
-    String cartProductIt = cart.productId;
-    String query = '''
-    SELECT COUNT(*) FROM $table_shop_heaven_cart
-    WHERE $productId = $cartProductIt
-    ''';
+  var dbClient = await database;
+  String cartProductId = cart.productId;
 
-    // Execute the query and get the result as a list of maps
-    List<Map<String, dynamic>> result = await dbClient.rawQuery(query);
+  String query = '''
+    SELECT SUM($quantity) AS total_quantity FROM $table_shop_heaven_cart
+    WHERE $productId = '$cartProductId'
+  ''';
 
-    // Check if the count is greater than zero, indicating that the item already exists
-    return result[0]['COUNT(*)'];
-  }
+  // Execute the query and get the result as a list of maps
+  List<Map<String, dynamic>> result = await dbClient.rawQuery(query);
+
+  // Check if the total quantity is greater than zero
+  int totalQuantity = result[0]['total_quantity'] ?? 0;
+  return totalQuantity;
+}
+
 
   Future<int> getTotalItemCount() async {
     var dbClient = await database;
@@ -122,14 +125,12 @@ class DBManager {
 
   Future<void> updateQuantity(Cart cart, int newQuantity) async {
     var dbClient = await database;
-    // print("New Quantity Recieved is: " + newQuantity.toString());
-    int prId = cart.id!;
     String query = '''
     UPDATE $table_shop_heaven_cart
-    SET $quantity = ?
-    WHERE $id = ?
+    SET $quantity = $newQuantity
+    WHERE $id = ${cart.id!}
   ''';
-    await dbClient.rawUpdate(query, [newQuantity, prId]);
+    await dbClient.rawQuery(query);
   }
 
   Future<List<Map<String, dynamic>>> getItemsWithQuantityGreaterThanTwo(

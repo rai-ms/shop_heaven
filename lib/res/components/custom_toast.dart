@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomToast {
-  String? message;
-  CustomToast({required BuildContext context, required String message}) {
+  String message;
+  CustomToast({required BuildContext context, required  this.message}) {
     final overlay = Overlay.of(context);
     final overlayEntry = OverlayEntry(
       builder: (context) => Padding(

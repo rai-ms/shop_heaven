@@ -1,7 +1,7 @@
 import 'package:shop_heaven/utils/random_no_generator.dart';
 
 class Cart {
-  int? id;
+  int id;
   String productId;
   String productName;
   int initialPrice;

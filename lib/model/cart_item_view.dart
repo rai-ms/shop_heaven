@@ -32,6 +32,7 @@ class _CartViewUIState extends State<CartViewUI> {
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
+                      // child: Image.network(widget.cart.image),
                       child: CachedNetworkImage(
                         imageUrl: widget.cart.image,
                         placeholder: (context, url) =>
@@ -108,7 +109,7 @@ class _CartViewUIState extends State<CartViewUI> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        await value.decrease(widget.cart);
+                        await value.increase(widget.cart);
                       },
                       child: Container(
                         width: 30,
