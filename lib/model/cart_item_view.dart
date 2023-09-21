@@ -7,10 +7,10 @@ import '../view_model/homepage_view_model.dart';
 import 'cart_model.dart';
 
 class CartViewUI extends StatefulWidget {
-  CartViewUI({super.key, required this.cart, this.isAddRemove = false});
+  const CartViewUI({super.key, required this.cart, this.isAddRemove = false});
 
-  Cart cart;
-  bool isAddRemove = false;
+  final Cart cart;
+  final bool isAddRemove;
 
   @override
   State<CartViewUI> createState() => _CartViewUIState();
@@ -77,16 +77,7 @@ class _CartViewUIState extends State<CartViewUI> {
                   builder: (context, value, child) {
                     return InkWell(
                       onTap: () {
-                        value.increase(widget.cart ??
-                            Cart(
-                                id: 00,
-                                productName: "productName",
-                                image: "image",
-                                initialPrice: 00,
-                                productId: "",
-                                productPrice: 00,
-                                quantity: 00,
-                                unitTag: "unitTag"));
+                        value.increase(widget.cart);
                       },
                       child: Container(
                         height: 50,
@@ -115,7 +106,7 @@ class _CartViewUIState extends State<CartViewUI> {
             builder: ((context, AsyncSnapshot<int> snapshot) {
               final itemCount = snapshot.data;
               if (itemCount == null) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

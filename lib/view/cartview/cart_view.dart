@@ -30,32 +30,27 @@ class _CartViewState extends State<CartView> {
                 flex: 8,
                 child: Consumer<CartViewModelProvider>(
                     builder: (key, value, child) {
-                      return FutureBuilder(
-                        future: value.getAllData(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<List<Cart>> snapshot) {
-                          // List<Cart> cartList = snapshot.data!;
-                          if (!snapshot.hasData || snapshot.hasError) {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          } else if (snapshot.hasData) {
-                            return ListView.builder(
-                              itemBuilder: (context, index) => CartViewUI(
-                                cart: snapshot.data![index] ?? Cart(id: 00, productName: "productName", image: "image", initialPrice: 00, productId: "productId", productPrice: 00, quantity: 0, unitTag: "unitTag"),
-                                isAddRemove: true,
-                              ),
-                              itemCount: snapshot.data!.length,
-                            );
-                          } else
-                            // ignore: curly_braces_in_flow_control_structures
-                            return const Center(
-                                child: CircularProgressIndicator());
-                        });
+                  return FutureBuilder(
+                      future: value.getAllData(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Cart>> snapshot) {
+                        if (!snapshot.hasData || snapshot.hasError) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasData) {
+                          return ListView.builder(
+                            itemBuilder: (context, index) => CartViewUI(
+                              cart: snapshot.data![index],
+                              isAddRemove: true,
+                            ),
+                            itemCount: snapshot.data!.length,
+                          );
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());}
+                      });
                 })),
-            Expanded(
-              flex: 2,
-              child: generateBill()
-              )
+            Expanded(flex: 2, child: generateBill())
           ],
         ),
       ),
@@ -71,17 +66,24 @@ class _CartViewState extends State<CartView> {
           Consumer<HomePageViewModel>(
             builder: (context, value, child) {
               setValues(value.counter, value.totalPrice);
-              return Visibility(
-                visible: value.counter == 0 ? false:true,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("${AppStrings.totalItemCount}$ct"),
-                    Text("${AppStrings.totalPrice}$tp"),
-                  ],
-                ),
-              );
+              return FutureBuilder(
+                  future: value.counter,
+                  builder: (context, AsyncSnapshot<int> val) {
+                    if (!val.hasData) {
+                      return const CircularProgressIndicator();
+                    }
+                    return Visibility(
+                      visible: (val.data == 0) ? false : true,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text("${AppStrings.totalItemCount}$ct"),
+                          Text("${AppStrings.totalPrice}$tp"),
+                        ],
+                      ),
+                    );
+                  });
             },
           ),
         ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_heaven/data/app_exceptions/app_exception.dart';
 import 'package:shop_heaven/model/cart_model.dart';
-import 'package:shop_heaven/res/components/custom_toast.dart';
 
 import '../utils/database/db_manager.dart';
 
@@ -34,7 +33,7 @@ class CartViewModelProvider extends ChangeNotifier {
 
   Future<void> deleteFromDatabase(Cart cart) async {
     await _dbManager.deleteCartItem(cart).then((value) {
-      print("Item Removed");
+      // debugPrint("Item Removed");
     }).onError((error, stackTrace) {
       throw DatabaseException(error.toString());
     });
@@ -51,7 +50,7 @@ class CartViewModelProvider extends ChangeNotifier {
       _dbManager.insert(cart);
     }
     await _dbManager.updateQuantity(cart, ct + 1).then((value) {
-      print("Success in increase");
+      // debugPrint("Success in increase");
       notifyListeners();
     }).onError((error, stackTrace) {
       throw DatabaseException(error.toString());
@@ -62,7 +61,7 @@ class CartViewModelProvider extends ChangeNotifier {
     int ct = await getItemCount(cart);
     if (ct > 1) {
       await _dbManager.updateQuantity(cart, ct - 1).then((value) {
-        print("Success decrease");
+        // debugPrint("Success decrease");
         notifyListeners();
       }).onError((error, stackTrace) {
         throw DatabaseException(error.toString());
