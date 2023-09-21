@@ -32,7 +32,7 @@ class _CartViewState extends State<CartView> {
                         future: value.getAllData(),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Cart>> snapshot) {
-                          List<Cart> cartList = snapshot.data!;
+                          // List<Cart> cartList = snapshot.data!;
                           if (!snapshot.hasData || snapshot.hasError) {
                             return const Center(
                                 child: CircularProgressIndicator());
@@ -75,7 +75,7 @@ class _CartViewState extends State<CartView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Total Item count:${ct}"),
+                    Text("Total Item count:$ct"),
                     Text("Total Price is:$tp"),
                   ],
                 ),

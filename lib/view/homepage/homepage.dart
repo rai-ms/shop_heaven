@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> {
   List<Cart> list = [];
   @override
   void initState() {
-    // TODO: implement initState
     list = Cart.getCartListFromLists();
     super.initState();
   }

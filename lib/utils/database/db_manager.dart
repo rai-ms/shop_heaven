@@ -128,7 +128,7 @@ class DBManager {
     String query = '''
     UPDATE $table_shop_heaven_cart
     SET $quantity = $newQuantity
-    WHERE $id = ${cart.id!}
+    WHERE $id = ${cart.id}
   ''';
     await dbClient.rawQuery(query);
   }

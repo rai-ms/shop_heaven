@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop_heaven/data/app_exceptions/app_exception.dart';
 import 'package:shop_heaven/model/cart_model.dart';
-import 'package:shop_heaven/res/components/custom_toast.dart';
 import 'package:shop_heaven/utils/database/db_manager.dart';
 
 class HomePageViewModel extends ChangeNotifier {
@@ -38,21 +37,21 @@ class HomePageViewModel extends ChangeNotifier {
     // print(ct.toString() + " Ct");
     if (ct > 0) {
       await _dbManager.updateQuantity(cart, ct + 1).then((value) async {
-        print("Success in updating ");
+        // print("Success in updating ");
         _cart = await getData();
         // print(_cart);
         notifyListeners();
       }).onError((error, stackTrace) {
-        print("Error in HomeViewModel $error");
+        throw DatabaseException(error.toString());
       });
     } else {
       await _dbManager.insert(cart).then((value) async {
-        print("Success in insert ");
+        // print("Success in insert ");
         _cart = await getData();
         // print(_cart);
         notifyListeners();
       }).onError((error, stackTrace) {
-        print("Error in HomeViewModel insert $error");
+        throw DatabaseException(error.toString());
       });
     }
   }
@@ -68,16 +67,16 @@ class HomePageViewModel extends ChangeNotifier {
       await _dbManager.updateQuantity(cart, ct - 1).then((value) async {
         _cart = await getData();
         notifyListeners();
-        print("Success in CartViewModel");
+        debugPrint("Success in CartViewModel");
       }).onError((error, stackTrace) {
-        print("Error in HomeViewModel decrease $error");
+        throw DatabaseException(error.toString());
       });
     } else {
       await deleteFromDatabase(cart).then((value) async {
         _cart = await getData();
         notifyListeners();
       }).onError((error, stackTrace) {
-        print("Error in CartViewModel delete $error");
+        throw DatabaseException(error.toString());
       });
     }
   }
