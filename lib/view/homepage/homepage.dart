@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_heaven/model/cart_item_view.dart';
 import 'package:shop_heaven/model/cart_model.dart';
+import 'package:shop_heaven/utils/app_helper/app_color.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
 
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               child: Consumer<HomePageViewModel>(
                 builder: (context, value, child) {
                   return Badge(
-                      backgroundColor: Colors.black,
+                      backgroundColor: AppColors.black,
                       label: FutureBuilder(
                           future: value.totalPrice,
                           builder: ((context, snapshot) {
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                           child: const Icon(
                             Icons.delete,
                             size: 30,
-                            color: Colors.blueAccent,
+                            color: AppColors.blueAccent,
                           )));
                 },
               ),
@@ -77,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               child: Consumer<HomePageViewModel>(
                 builder: (context, value, child) {
                   return Badge(
-                      backgroundColor: Colors.black,
+                      backgroundColor: AppColors.black,
                       label: FutureBuilder(
                           future: value.counter,
                           builder: ((context, snapshot) {
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                           child: const Icon(
                             Icons.shopping_bag,
                             size: 30,
-                            color: Colors.blueAccent,
+                            color: AppColors.blueAccent,
                           )));
                 },
               ),

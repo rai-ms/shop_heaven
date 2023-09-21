@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_heaven/data/app_exceptions/app_exception.dart';
+import 'package:shop_heaven/utils/app_helper/app_strings.dart';
 
 GlobalKey<ScaffoldMessengerState> navigatorKeyNew =
     GlobalKey<ScaffoldMessengerState>();
@@ -8,7 +9,6 @@ GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 GlobalKey<ScaffoldMessengerState> navigatorScaffoldKey =
     GlobalKey<ScaffoldMessengerState>();
 const Duration apiTimeOut = Duration(minutes: 2);
-Function(String)? updateMessage;
 
 bool isNullOrEmpty(dynamic value) {
   if (value == null) {
@@ -17,7 +17,7 @@ bool isNullOrEmpty(dynamic value) {
     if (value is List || value is String) {
       return value.isEmpty;
     } else {
-      return value == '';
+      return value == AppStrings.emptyString;
     }
   }
 }
@@ -30,13 +30,13 @@ void printDebug(dynamic object) {
 
 String convertNA(data) {
   try {
-    if (data != null || data != '') {
+    if (data != null || data != AppStrings.emptyString) {
       return data.toString();
     } else {
-      return 'N/A';
+      return AppStrings.na;
     }
   } catch (e) {
-    throw UnableToConvert("DataType Mismatch");
+    throw UnableToConvert(AppStrings.dataTypeMismatch);
   }
 }
 

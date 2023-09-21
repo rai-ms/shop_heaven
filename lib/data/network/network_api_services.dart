@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:shop_heaven/data/app_exceptions/app_exception.dart';
 import 'package:shop_heaven/data/network/base_api_service.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
+import 'package:shop_heaven/utils/app_helper/app_strings.dart';
 
 class NetworkApiServices extends BaseApiServices {
   @override
@@ -14,9 +14,9 @@ class NetworkApiServices extends BaseApiServices {
       res = await http.get(Uri.parse(url));
       return returnResponse(res);
     } on SocketException {
-      throw InternetException("No Network ");
+      throw InternetException(AppStrings.noNetwork);
     } on RequestTimeOut {
-      throw RequestTimeOut("Taking more time ");
+      throw RequestTimeOut(AppStrings.takingMoreTime);
     }
   }
 
@@ -27,9 +27,9 @@ class NetworkApiServices extends BaseApiServices {
       res = await http.post(Uri.parse(url), body: jsonEncode(data));
       return returnResponse(res);
     } on SocketException {
-      throw InternetException("No Network ");
+      throw InternetException(AppStrings.noNetwork);
     } on RequestTimeOut {
-      throw RequestTimeOut("Taking more time ");
+      throw RequestTimeOut(AppStrings.takingMoreTime);
     }
   }
 
@@ -38,9 +38,9 @@ class NetworkApiServices extends BaseApiServices {
       case 200:
         return jsonDecode(response.body);
       case 400:
-        throw InvalidUrl("Invalid Url");
+        throw InvalidUrl(AppStrings.invalidUrl);
       default:
-        throw FetchDataException("Unable to fetch data");
+        throw FetchDataException(AppStrings.unableToFetchData);
     }
   }
 }

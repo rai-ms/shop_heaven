@@ -1,3 +1,5 @@
+import 'package:shop_heaven/utils/app_helper/app_strings.dart';
+
 class AppException implements Exception {
   final String? _message;
   final String? _prefix;
@@ -12,42 +14,42 @@ class AppException implements Exception {
 
 class InternetException extends AppException {
   InternetException([String? message]) {
-    AppException(message, "No Internet");
+    AppException(message, AppStrings.noInternet);
   }
 }
 
 class RequestTimeOut extends AppException {
   RequestTimeOut([String? message]) {
-    AppException(message, "Request Time Out");
+    AppException(message, AppStrings.requestTimeOut);
   }
 }
 
 class ServerException extends AppException {
   ServerException([String? message]) {
-    AppException(message, "Server Error");
+    AppException(message, AppStrings.serverError);
   }
 }
 
 class DatabaseException extends AppException {
   DatabaseException([String? message]) {
-    AppException(message, "Database Error");
+    AppException(message, AppStrings.databaseError);
   }
 }
 
 class InvalidUrl extends AppException {
   InvalidUrl([String? message]) {
-    AppException(message, "Invalid Url");
+    AppException(message, AppStrings.invalidUrl);
   }
 }
 
 class FetchDataException extends AppException {
   FetchDataException([String? message]) {
-    AppException(message, "Error Occured");
+    AppException(message, AppStrings.errorOccured);
   }
 }
 
 class UnableToConvert extends AppException {
   UnableToConvert([String? message]) {
-    AppException(message, "Error DataType");
+    AppException(message, AppStrings.errorDataType);
   }
 }
