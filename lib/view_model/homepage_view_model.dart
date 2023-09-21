@@ -67,7 +67,7 @@ class HomePageViewModel extends ChangeNotifier {
       await _dbManager.updateQuantity(cart, ct - 1).then((value) async {
         _cart = await getData();
         notifyListeners();
-        debugPrint("Success in CartViewModel");
+        // debugPrint("Success in CartViewModel");
       }).onError((error, stackTrace) {
         throw DatabaseException(error.toString());
       });

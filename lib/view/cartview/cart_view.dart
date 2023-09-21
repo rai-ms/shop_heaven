@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_heaven/model/cart_item_view.dart';
 import 'package:shop_heaven/model/cart_model.dart';
+import 'package:shop_heaven/utils/app_helper/app_strings.dart';
 import 'package:shop_heaven/view_model/cart_view_model.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
 
@@ -18,7 +19,7 @@ class _CartViewState extends State<CartView> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.greenAccent,
-          title: const Text("Buy Added Products")),
+          title: const Text(AppStrings.buyAddedProducts)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,8 +76,8 @@ class _CartViewState extends State<CartView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Total Item count:$ct"),
-                    Text("Total Price is:$tp"),
+                    Text("${AppStrings.totalItemCount}$ct"),
+                    Text("${AppStrings.totalPrice}$tp"),
                   ],
                 ),
               );

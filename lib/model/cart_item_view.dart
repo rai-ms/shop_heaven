@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_heaven/utils/app_helper/app_color.dart';
 import 'package:shop_heaven/utils/app_helper/app_strings.dart';
 import '../view_model/cart_view_model.dart';
 import '../view_model/homepage_view_model.dart';
@@ -30,10 +29,11 @@ class _CartViewUIState extends State<CartViewUI> {
               Expanded(
                 child: Container(
                     decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.black, width: 1),
+                        border: Border.all(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
+                      // child: Image.network(widget.cart.image),
                       child: CachedNetworkImage(
                         imageUrl: widget.cart.image,
                         placeholder: (context, url) =>
@@ -83,7 +83,7 @@ class _CartViewUIState extends State<CartViewUI> {
                         height: 50,
                         width: 120,
                         decoration: BoxDecoration(
-                            color: AppColors.lightGreen,
+                            color: Colors.lightGreen,
                             borderRadius: BorderRadius.circular(20)),
                         child: const Center(child: Text(AppStrings.addToCart)),
                       ),
@@ -115,19 +115,19 @@ class _CartViewUIState extends State<CartViewUI> {
                       child: Container(
                         width: 30,
                         decoration: const BoxDecoration(
-                            color: AppColors.green,
+                            color: Colors.green,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 bottomLeft: Radius.circular(10))),
                         child: const Icon(
                           Icons.exposure_plus_1,
-                          color: AppColors.white,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                     Container(
                       width: 30,
-                      color: AppColors.white,
+                      color: Colors.white,
                       child: Text(count.toString()),
                     ),
                     InkWell(
@@ -137,13 +137,13 @@ class _CartViewUIState extends State<CartViewUI> {
                       child: Container(
                         width: 30,
                         decoration: const BoxDecoration(
-                            color: AppColors.green,
+                            color: Colors.green,
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(10),
                                 bottomRight: Radius.circular(10))),
                         child: const Icon(
                           Icons.exposure_minus_1,
-                          color: AppColors.white,
+                          color: Colors.white,
                         ),
                       ),
                     ),

@@ -1,4 +1,4 @@
-import 'package:shop_heaven/global/random_no_generator.dart';
+import 'package:shop_heaven/utils/random_no_generator.dart';
 
 class Cart {
   int id;
