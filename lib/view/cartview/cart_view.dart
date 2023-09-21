@@ -28,7 +28,7 @@ class _CartViewState extends State<CartView> {
                 flex: 8,
                 child: Consumer<CartViewModelProvider>(
                     builder: (key, value, child) {
-                      return FutureBuilder<List<Cart>>(
+                      return FutureBuilder(
                         future: value.getAllData(),
                         builder: (BuildContext context,
                             AsyncSnapshot<List<Cart>> snapshot) {
@@ -39,10 +39,10 @@ class _CartViewState extends State<CartView> {
                           } else if (snapshot.hasData) {
                             return ListView.builder(
                               itemBuilder: (context, index) => CartViewUI(
-                                cart: cartList[index],
+                                cart: snapshot.data![index],
                                 isAddRemove: true,
                               ),
-                              itemCount: cartList.length,
+                              itemCount: snapshot.data!.length,
                             );
                           } else
                             // ignore: curly_braces_in_flow_control_structures
