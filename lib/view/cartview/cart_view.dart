@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_heaven/model/cart_item_view.dart';
 import 'package:shop_heaven/model/cart_model.dart';
+import 'package:shop_heaven/utils/app_helper/app_color.dart';
 import 'package:shop_heaven/utils/app_helper/app_strings.dart';
 import 'package:shop_heaven/view_model/cart_view_model.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
@@ -18,7 +19,7 @@ class _CartViewState extends State<CartView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: AppColors.greenAccent,
           title: const Text(AppStrings.buyAddedProducts)),
       body: Center(
         child: Column(
@@ -40,7 +41,7 @@ class _CartViewState extends State<CartView> {
                           } else if (snapshot.hasData) {
                             return ListView.builder(
                               itemBuilder: (context, index) => CartViewUI(
-                                cart: snapshot.data![index],
+                                cart: snapshot.data![index] ?? Cart(id: 00, productName: "productName", image: "image", initialPrice: 00, productId: "productId", productPrice: 00, quantity: 0, unitTag: "unitTag"),
                                 isAddRemove: true,
                               ),
                               itemCount: snapshot.data!.length,

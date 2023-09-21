@@ -77,7 +77,16 @@ class _CartViewUIState extends State<CartViewUI> {
                   builder: (context, value, child) {
                     return InkWell(
                       onTap: () {
-                        value.increase(widget.cart);
+                        value.increase(widget.cart ??
+                            Cart(
+                                id: 00,
+                                productName: "productName",
+                                image: "image",
+                                initialPrice: 00,
+                                productId: "",
+                                productPrice: 00,
+                                quantity: 00,
+                                unitTag: "unitTag"));
                       },
                       child: Container(
                         height: 50,
@@ -98,58 +107,69 @@ class _CartViewUIState extends State<CartViewUI> {
 
   Widget addRemoveItemFromCart() {
     return SizedBox(
-        height: 90,
-        child:
-            Consumer<CartViewModelProvider>(builder: (context, value, child) {
-          return FutureBuilder(
-              future: value.getItemCount(widget.cart),
-              builder: ((context, AsyncSnapshot<int> snapshot) {
-                int count = snapshot.data!;
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () async {
-                        await value.increase(widget.cart);
-                      },
-                      child: Container(
-                        width: 30,
-                        decoration: const BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10))),
-                        child: const Icon(
-                          Icons.exposure_plus_1,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    Container(
+      height: 90,
+      child: Consumer<CartViewModelProvider>(
+        builder: (context, value, child) {
+          return FutureBuilder<int>(
+            future: value.getItemCount(widget.cart),
+            builder: ((context, AsyncSnapshot<int> snapshot) {
+              final itemCount = snapshot.data;
+              if (itemCount == null) {
+                return CircularProgressIndicator();
+              }
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () async {
+                      await value.increase(widget.cart);
+                    },
+                    child: Container(
                       width: 30,
-                      color: Colors.white,
-                      child: Text(count.toString()),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await value.decrease(widget.cart);
-                      },
-                      child: Container(
-                        width: 30,
-                        decoration: const BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10))),
-                        child: const Icon(
-                          Icons.exposure_minus_1,
-                          color: Colors.white,
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
                         ),
                       ),
+                      child: const Icon(
+                        Icons.exposure_plus_1,
+                        color: Colors.white,
+                      ),
                     ),
-                  ],
-                );
-              }));
-        }));
+                  ),
+                  Container(
+                    width: 30,
+                    color: Colors.white,
+                    child: Text(itemCount.toString()),
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      await value.decrease(widget.cart);
+                    },
+                    child: Container(
+                      width: 30,
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.exposure_minus_1,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }),
+          );
+        },
+      ),
+    );
   }
+
 }
