@@ -12,6 +12,9 @@ class LoginPageViewModel extends ChangeNotifier
   final GlobalKey<FormState> formKey = GlobalKey();
   var emailCont = TextEditingController();
   var passCont = TextEditingController();
+  FocusNode idFocusNode = FocusNode();
+  FocusNode passFocusNode = FocusNode();
+  FocusNode loginButtonFocusNode = FocusNode();
 
   int currentIndex = 0;
 

@@ -36,6 +36,14 @@ class AppStyle {
     );
   }
 
+  static TextStyle? get blackBold20 {
+    return const TextStyle(
+      color: AppColors.black,
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+    );
+  }
+
   static TextStyle? get greyRegular20 {
     return const TextStyle(
       color: AppColors.grey,

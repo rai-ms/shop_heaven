@@ -39,17 +39,20 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
             ),
-            const MyCarousel(),
-            Consumer<LoginPageViewModel>(builder: (context, provider, child){
-              return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children:
-                  [
-                    InkWell( onTap: provider.prevPage, child: Text("<", style: AppStyle.blueBold20,)),
-                    InkWell(onTap: provider.nextPage,child: Text(">", style: AppStyle.blueBold20,)),
-                  ]
-              );
-            })
+            const Expanded(flex: 4, child: MyCarousel()),
+            Flexible(
+              child: Consumer<LoginPageViewModel>(builder: (context, provider, child){
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children:
+                    [
+                      InkWell( onTap: provider.prevPage, child: Text("<", style: AppStyle.blueBold20,)),
+                      InkWell(onTap: provider.nextPage,child: Text(">", style: AppStyle.blueBold20,)),
+                    ]
+                );
+              }),
+            ),
+            const SizedBox(height: 1,),
           ],
         ),
       ),

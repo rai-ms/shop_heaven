@@ -6,17 +6,20 @@ class AppRoundedButton extends StatelessWidget {
   String title;
   VoidCallback onTap;
   bool loading;
+  FocusNode? focusNode;
 
   AppRoundedButton(
       {super.key,
         required this.onTap,
         required this.title,
+        this.focusNode,
         this.loading = false});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
+      focusNode: focusNode,
       child: Container(
         height: 60,
         width: 200,
