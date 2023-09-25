@@ -12,6 +12,7 @@ class AppStrings {
   static const String errorOccured = "Error Occured";
   static const String notValidMail = "Not Valid Mail";
   static const String id = "Id";
+  static const String forgetPassword = "Forget Password ?";
   static const String yourName = "Name";
   static const String fullName = "Full Name";
   static const String yourEmail = "Your Email";

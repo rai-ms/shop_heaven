@@ -34,7 +34,7 @@ class AppButton
     (
       height: 60,
       decoration: BoxDecoration(
-        color: AppColors.blue,
+        color: AppColors.blueSplashScreen,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: AppColors.black),
         boxShadow: const

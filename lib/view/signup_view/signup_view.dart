@@ -8,7 +8,7 @@ import '../../utils/app_helper/app_color.dart';
 import '../../utils/app_helper/app_strings.dart';
 import '../../utils/routes/route_name.dart';
 import '../../utils/utils.dart';
-import '../login_view/widgets/app_rounded_button.dart';
+import '../../res/components/app_rounded_button.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});

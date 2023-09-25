@@ -48,6 +48,9 @@ class LoginPageViewModel extends ChangeNotifier
     passCont.dispose();
     emailCont.dispose();
     formKey.currentState!.dispose();
+    idFocusNode.dispose();
+    passFocusNode.dispose();
+    loginButtonFocusNode.dispose();
     super.dispose();
   }
 }

@@ -100,4 +100,13 @@ class AppStyle {
     );
   }
 
+  static TextStyle get blueItalicBold15 {
+    return const TextStyle(
+      color: AppColors.blueSplashScreen,
+      fontSize: 15,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.w700,
+    );
+  }
+
 }

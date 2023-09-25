@@ -102,6 +102,9 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            InkWell(onTap: (){
+              Navigator.pushNamedAndRemoveUntil(context, RouteName.wishListPage, (route) => route.isFirst);
+            }, child: Icon(Icons.favorite, color: Colors.red,))
           ]),
       body: Center(
           child: ConstrainedBox(
@@ -112,7 +115,11 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                     itemCount: list.length,
                     itemBuilder: ((context, index) {
-                      return CartViewUI(cart: list[index]);
+                      return InkWell(
+                          onTap: (){
+                            Navigator.pushNamedAndRemoveUntil(context, RouteName.productView, (route) => route.isFirst, arguments: {"cart":list[index]});
+                          },
+                          child: CartViewUI(cart: list[index]));
                     })))
           ],
         ),
