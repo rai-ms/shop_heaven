@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/view/homepage/homepage.dart';
+import 'package:shop_heaven/view/login_view/login_view.dart';
+import 'package:shop_heaven/view/signup_view/signup_view.dart';
 import 'package:shop_heaven/view/splashscreen/splashscreen.dart';
 
 import '../../view/cartview/cart_view.dart';
@@ -10,10 +12,14 @@ class NavigateRoute {
     switch (settings.name) {
       case RouteName.homepage:
         return MaterialPageRoute(builder: (context) => const HomePage());
+      case RouteName.signupPage:
+        return MaterialPageRoute(builder: (context) => const SignUpView());
       case RouteName.splashscreen:
         return MaterialPageRoute(builder: (context) => const SplashScreen());
       case RouteName.cartPage:
         return MaterialPageRoute(builder: (context) => const CartView());
+      case RouteName.loginPage:
+        return MaterialPageRoute(builder: (context) => const LoginView());
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(

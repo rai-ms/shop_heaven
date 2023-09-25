@@ -4,6 +4,8 @@ import 'package:shop_heaven/utils/routes/navigate_route.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/view_model/cart_view_model.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
+import 'package:shop_heaven/view_model/login_page_view_model.dart';
+import 'package:shop_heaven/view_model/sign_up_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (context) => HomePageViewModel()),
           ChangeNotifierProvider(create: (context) => CartViewModelProvider()),
+          ChangeNotifierProvider(create: (context) => LoginPageViewModel()),
+          ChangeNotifierProvider(create: (context) => SignUpViewModel()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

@@ -3,11 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shop_heaven/data/app_exceptions/app_exception.dart';
 import 'package:shop_heaven/utils/app_helper/app_strings.dart';
 
-GlobalKey<ScaffoldMessengerState> navigatorKeyNew =
-    GlobalKey<ScaffoldMessengerState>();
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-GlobalKey<ScaffoldMessengerState> navigatorScaffoldKey =
-    GlobalKey<ScaffoldMessengerState>();
 const Duration apiTimeOut = Duration(minutes: 2);
 
 bool isNullOrEmpty(dynamic value) {
@@ -45,4 +40,12 @@ SizedBox sizedBox({double? hei, double? wid}) {
     height: hei ?? 0.0,
     width: wid ?? 0.0,
   );
+}
+
+double getFullHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height;
+}
+
+double getFullWidth(BuildContext context) {
+  return MediaQuery.of(context).size.width;
 }
