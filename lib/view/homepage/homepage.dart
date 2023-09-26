@@ -17,6 +17,7 @@ int countItems = 0;
 
 class _HomePageState extends State<HomePage> {
   List<Cart> list = [];
+  String? name;
   @override
   void initState() {
     list = Cart.getCartListFromLists();
@@ -45,6 +46,18 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           actions: [
+            Consumer<HomePageViewModel>(
+              builder: (context, value, child) {
+                return InkWell(
+                  onTap: (){
+                    value.signOut(context);
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(value.getUserImage()!),
+                  ),
+                );
+              },
+            ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Consumer<HomePageViewModel>(
@@ -103,7 +116,8 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            InkWell(onTap: (){
+            InkWell(
+                onTap: (){
               Navigator.pushNamed(context, RouteName.wishListPage);
             }, child:const Icon(Icons.favorite, color: Colors.red,))
           ]),

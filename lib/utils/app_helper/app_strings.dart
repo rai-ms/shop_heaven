@@ -21,6 +21,7 @@ class AppStrings {
   static const String pass = "Password";
   static const String errorDataType = "Error DataType";
   static const String na = "N/A";
+  static const String errorLogin = "Error Login";
   static const String signIn = "Log In";
   static const String hello = "Hello!";
   static const String createAnAccount = "Create an account to continue";

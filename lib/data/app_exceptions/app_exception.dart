@@ -53,3 +53,9 @@ class UnableToConvert extends AppException {
     AppException(message, AppStrings.errorDataType);
   }
 }
+
+class UnableToLogin extends AppException {
+  UnableToLogin([String? message]) {
+    AppException(message, AppStrings.errorLogin);
+  }
+}

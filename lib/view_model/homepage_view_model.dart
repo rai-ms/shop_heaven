@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shop_heaven/data/app_exceptions/app_exception.dart';
 import 'package:shop_heaven/model/cart_model.dart';
 import 'package:shop_heaven/utils/database/db_manager.dart';
+import 'package:shop_heaven/utils/routes/route_name.dart';
 
 class HomePageViewModel extends ChangeNotifier {
   List<Cart> _cart = [];
   final DBManager _dbManager = DBManager();
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   int _counter = 0;
   Future<int> get counter async {
@@ -94,5 +97,17 @@ class HomePageViewModel extends ChangeNotifier {
     _counter = await _dbManager.getTotalItemCount();
     notifyListeners();
     return _counter;
+  }
+  String? getUserName() {
+    return firebaseAuth.currentUser!.displayName;
+  }
+
+  String? getUserImage() {
+    return firebaseAuth.currentUser!.photoURL;
+  }
+
+  void signOut(BuildContext context) {
+    firebaseAuth.signOut();
+    Navigator.pushNamedAndRemoveUntil(context, RouteName.loginPage, (route) => false);
   }
 }

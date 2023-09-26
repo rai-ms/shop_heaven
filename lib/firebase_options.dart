@@ -70,6 +70,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '478829532994',
     projectId: 'shop-heaven-ed8be',
     storageBucket: 'shop-heaven-ed8be.appspot.com',
+    androidClientId:
+    '478829532994-s0hfllndq79h94ldbpfrauuju8bmljff.apps.googleusercontent.com',
+    iosClientId:
+    '478829532994-sqh711f23cvojpvqlrdk50aim0lif0ce.apps.googleusercontent.com',
     iosBundleId: 'com.appinventiv.ashish.shopheaven.shopHeaven',
   );
 }
