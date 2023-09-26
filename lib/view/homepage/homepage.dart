@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
           backgroundColor: Colors.greenAccent,
           title: Consumer<HomePageViewModel>(
             builder: (context, value, child) {
@@ -103,8 +104,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             InkWell(onTap: (){
-              Navigator.pushNamedAndRemoveUntil(context, RouteName.wishListPage, (route) => route.isFirst);
-            }, child: Icon(Icons.favorite, color: Colors.red,))
+              Navigator.pushNamed(context, RouteName.wishListPage);
+            }, child:const Icon(Icons.favorite, color: Colors.red,))
           ]),
       body: Center(
           child: ConstrainedBox(
@@ -115,11 +116,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView.builder(
                     itemCount: list.length,
                     itemBuilder: ((context, index) {
-                      return InkWell(
-                          onTap: (){
-                            Navigator.pushNamedAndRemoveUntil(context, RouteName.productView, (route) => route.isFirst, arguments: {"cart":list[index]});
-                          },
-                          child: CartViewUI(cart: list[index]));
+                      return CartViewUI(cart: list[index]);
                     })))
           ],
         ),

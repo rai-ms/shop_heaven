@@ -100,6 +100,14 @@ class AppStyle {
     );
   }
 
+  static TextStyle get blackSmall12 {
+    return const TextStyle(
+      color: AppColors.black,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+    );
+  }
+
   static TextStyle get blueItalicBold15 {
     return const TextStyle(
       color: AppColors.blueSplashScreen,

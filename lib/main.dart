@@ -6,6 +6,7 @@ import 'package:shop_heaven/view_model/cart_view_model.dart';
 import 'package:shop_heaven/view_model/homepage_view_model.dart';
 import 'package:shop_heaven/view_model/login_page_view_model.dart';
 import 'package:shop_heaven/view_model/sign_up_view_model.dart';
+import 'package:shop_heaven/view_model/wish_list_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => CartViewModelProvider()),
           ChangeNotifierProvider(create: (context) => LoginPageViewModel()),
           ChangeNotifierProvider(create: (context) => SignUpViewModel()),
+          ChangeNotifierProvider(create: (context) => WishListProvider()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_heaven/utils/app_helper/app_strings.dart';
+import 'package:shop_heaven/utils/routes/route_name.dart';
 import '../view_model/cart_view_model.dart';
 import '../view_model/homepage_view_model.dart';
 import 'cart_model.dart';
@@ -19,80 +20,86 @@ class CartViewUI extends StatefulWidget {
 class _CartViewUIState extends State<CartViewUI> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          flex: 7,
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      // child: Image.network(widget.cart.image),
-                      child: CachedNetworkImage(
-                        imageUrl: widget.cart.image,
-                        placeholder: (context, url) =>
-                            const Center(child: CircularProgressIndicator()),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
-                    )),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.cart.productName),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Row(
-                      children: [
-                        Text(widget.cart.unitTag),
-                        const SizedBox(
-                          width: 10,
+    return InkWell(
+      onTap: () {
+       Navigator.pushNamed(context, RouteName.productView, arguments: {"cart":widget.cart});
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 7,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        // child: Image.network(widget.cart.image),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.cart.image,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
-                        Text(widget.cart.productPrice.toString()),
-                      ],
-                    ),
-                  ],
+                      )),
                 ),
-              ),
-            ],
-          ),
-        ),
-        (!widget.isAddRemove)
-            ? Expanded(
-                flex: 3,
-                child: Consumer<HomePageViewModel>(
-                  builder: (context, value, child) {
-                    return InkWell(
-                      onTap: () {
-                        value.increase(widget.cart);
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 120,
-                        decoration: BoxDecoration(
-                            color: Colors.lightGreen,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Center(child: Text(AppStrings.addToCart)),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.cart.productName),
+                      const SizedBox(
+                        width: 20,
                       ),
-                    );
-                  },
+                      Row(
+                        children: [
+                          Text(widget.cart.unitTag),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(widget.cart.productPrice.toString()),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            : Expanded(flex: 3, child: addRemoveItemFromCart())
-      ],
+              ],
+            ),
+          ),
+          (!widget.isAddRemove)
+              ? Expanded(
+                  flex: 3,
+                  child: Consumer<HomePageViewModel>(
+                    builder: (context, value, child) {
+                      return InkWell(
+                        onTap: () {
+                          value.increase(widget.cart);
+                        },
+                        child: Container(
+                          height: 50,
+                          width: 120,
+                          decoration: BoxDecoration(
+                              color: Colors.lightGreen,
+                              borderRadius: BorderRadius.circular(20)),
+                          child:
+                              const Center(child: Text(AppStrings.addToCart)),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : Expanded(flex: 3, child: addRemoveItemFromCart())
+        ],
+      ),
     );
   }
 
@@ -162,5 +169,4 @@ class _CartViewUIState extends State<CartViewUI> {
       ),
     );
   }
-
 }
