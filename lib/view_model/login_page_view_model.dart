@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shop_heaven/utils/routes/route_name.dart';
 
+import '../repository/google_auth_firebase/google_auth_service.dart';
 import '../view/login_view/widgets/introduction_page.dart';
 import '../view/login_view/widgets/login_page_login_widget.dart';
 
@@ -52,5 +54,16 @@ class LoginPageViewModel extends ChangeNotifier
     passFocusNode.dispose();
     loginButtonFocusNode.dispose();
     super.dispose();
+  }
+
+  signUpUsingGoogle(BuildContext context) async {
+    GoogleAuthService googleAuthService = GoogleAuthService();
+    try {
+      final user = await googleAuthService.signInWithGoogle();
+      if(!context.mounted) return;
+      Navigator.pushNamedAndRemoveUntil(context, RouteName.homepage, (route) => false);
+        } catch (e){
+      debugPrint(e.toString());
+    }
   }
 }

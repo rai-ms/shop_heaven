@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_heaven/firebase_options.dart';
 import 'package:shop_heaven/utils/routes/navigate_route.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/view_model/cart_view_model.dart';
@@ -8,7 +10,11 @@ import 'package:shop_heaven/view_model/login_page_view_model.dart';
 import 'package:shop_heaven/view_model/sign_up_view_model.dart';
 import 'package:shop_heaven/view_model/wish_list_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

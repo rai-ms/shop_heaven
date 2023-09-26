@@ -7,6 +7,7 @@ import 'package:shop_heaven/utils/app_helper/app_style.dart';
 import 'package:shop_heaven/utils/routes/route_name.dart';
 import 'package:shop_heaven/utils/utils.dart';
 import 'package:shop_heaven/view_model/login_page_view_model.dart';
+import '../../../repository/google_auth_firebase/google_auth_service.dart';
 import '../../../utils/app_helper/app_color.dart';
 import '../../../res/components/app_rounded_button.dart';
 import 'other_button.dart';
@@ -108,13 +109,15 @@ class LoginPageLoginWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       const SizedBox(width: 10,),
-                      Flexible(child: AppButton.googleButton()),
+                      Flexible(child: InkWell(onTap: (){
+                       provider.signUpUsingGoogle(context);
+                      }, child: AppButton.googleButton())),
                       const SizedBox(width: 10,),
                       Flexible(child: AppButton.facebookButton()),
                       const SizedBox(width: 10,),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
